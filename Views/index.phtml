@@ -1,0 +1,93 @@
+<?php require('template/header.phtml') ?>
+
+<!--dropdown button for selecting category-->
+<div class="container-fluid">
+    <h3><a data-toggle="collapse" data-target="#filterCollapse">Filters</a></h3>
+    <div id="filterCollapse" class="collapse">
+        <form class="form-inline" action="<?php echo $_SERVER["PHP_SELF"] ?>">
+            <div class="loginDiv">
+                <label>Title: </label>
+                <input type="text" name="titleSearch" <?php if(isset($_GET['titleSearch'])) echo "value = \"".$_GET['titleSearch']."\"" ?>>
+            </div>
+            <div class="loginDiv">
+                <label>Content: </label>
+                <input type="text" name="contentSearch" <?php if(isset($_GET['contentSearch'])) echo "value = \"".$_GET['contentSearch']."\"" ?>>
+            </div>
+            <div class="loginDiv">
+                <label>Poster:</label>
+                <input type="text" name="posterSearch" <?php if(isset($_GET['posterSearch'])) echo "value = \"".$_GET['posterSearch']."\"" ?>>
+            </div>
+            <select class="form-control" name="categorySelect">
+                <?php
+                //echoes out all categories from the database and "selected" one which the user has chosen before
+                $categories = $view->categories;
+                echo "<option value=\"all\">all</option>";
+                foreach ($categories as $cat)
+                {
+                    if(isset($_GET["categorySelect"]) && $_GET["categorySelect"]==$cat["catName"])
+                    {
+                        echo "<option value=".$cat["catName"]." selected=\"selected\">".$cat["catName"]."</option>";
+                    }
+                    else
+                    {
+                        echo "<option value=".$cat["catName"].">".$cat["catName"]."</option>";
+                    }
+                }
+                ?>
+            </select> <!--php will get all categories from the database and display them here, it will have the open "selected" if the user selected it previously-->
+            <!--form for applying filter options-->
+                <button class="btn-primary form-control" type="submit">Apply Filter</button>
+            </form>
+    </div> <!--end of filter collapse-->
+</div>
+
+<!--this is the user menu at the top right of the screen-->
+<?php if(isset($_SESSION['loggedIn']))
+    //var_dump($view);
+    echo"<div class=\"nav navbar_default nav-stacked pull-right\" id='optionsMenu'>
+        <ul>
+            <li><form class=\"form-control\" action=\"login.php\" method=\"post\" id='loginButtonForm'>
+                                <input type=\"submit\" name=\"submit\" value=\"Log Out\" class='btn-link loginButton'>
+                                <input type=\"hidden\" name=\"previousPage\" value=\"index.php\">
+                                <input type='hidden' name='logOut' value='true'> 
+                                </form></li>
+            <li><a href=\"createPost.php\">Make a Post</a></li>
+        </ul>
+    </div>"
+?>
+
+<!--contains all posts displayed on index-->
+<div id="postContainer" class="col-sm-8">
+<?php
+//each container will be a link to a "posts" page and will GET the postID to that page
+$posts = (array)$view->posts; //gets array of post tuples
+//echo "checkpoint";
+//var_dump($posts);
+
+//if no poss are found
+if(count($posts) == 0)
+{
+    echo "<h2>No Matching posts found</h2>";
+}
+
+foreach ($posts as $post) //last post is replaced by previous post, meaning previous is displayed twice, IDK
+{
+    //var_dump($post);
+    $postID = $post["postID"]; //post ID
+    echo '
+    
+        <div class="container-fluid postListing">
+            <h4><a href="Post.php?postID='.$postID.'"> '.$post["title"].'</a></h4>
+                <p>
+                    '.$post["content"].'
+                </p>
+                <div id="statsBar" class="row" style="color: #2aabd2">
+                        <p style="display:inline-block">by <a href="userPage.php?userID='.$post["userID"].'">'.$post["userName"].'</a></p>
+                        <p style="display:inline-block "class="pull-right">'.$post["catName"].'</p>
+                </div>
+        </div>';
+}
+?>
+</div>
+
+<?php require('template/footer.phtml') ?>

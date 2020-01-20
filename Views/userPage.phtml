@@ -1,0 +1,17 @@
+<?php require('template/header.phtml') ?>
+<div class="container-fluid" id="userDetails">
+    <h2><?php echo $view->user['userName'] ?></h2>
+    <div class="container-fluid">
+        <label>Email:</label>
+        <p>
+            <?php echo $view->user['email'] ?>
+        </p>
+    </div>
+    <div class="container-fluid">
+        <label>Date Joined:</label>
+        <p>
+            <?php echo $view->user['dateJoined'] ?>
+        </p>
+    </div>
+</div>
+<?php require('template/footer.phtml')?>

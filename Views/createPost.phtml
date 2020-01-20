@@ -1,0 +1,42 @@
+<?php require_once("Views/template/header.phtml"); ?>
+
+<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Title:</label>
+        <input type="text" class="form-control" name="title" <?php if(isset($_POST['title'])) echo "value=\"".$_POST['title']."\"" ?>>
+        <?php if(isset($_POST['titleCheck']) && $_POST['titleCheck'] == true) echo "<label class=\"checkFail\">title is too long! (300 characters)</label>" ?>
+    </div>
+    <div class="form-group">
+        <label>content:</label>
+        <textarea class="form-control" name="content"><?php if(isset($_POST['content'])) echo $_POST['content'] ?></textarea>
+        <?php if(isset($_POST['contentCheck']) && $_POST['contentCheck'] == true) echo "<label class=\"checkFail\">title is too long! (300 characters)</label>" ?>
+    </div>
+    <div class="form-group">
+            <select class="form-control" name="category">
+                <?php
+                //echoes out all categories from the database and "selected" one which the user has chosen before
+                $categories = $view->categories;
+                foreach ($categories as $cat)
+                {
+                    echo "<option value=".$cat["catName"].">".$cat["catName"]."</option>";
+                }
+                ?>
+            </select>
+    </div>
+    <div class="form-group">
+        <input type="file" name="image">
+        <?php   //error message code
+            if(isset($_POST['imageCheck']) && $_POST['imageCheck'] == false)
+            {
+                echo "<label class='checkFail'>Uploaded file is not an image</label>";
+            }
+            if(isset($_POST['sizeCheck']) && $_POST['sizeCheck'] == false)
+            {
+                echo "<label class='checkFail'>Uploaded image is larger than 512KB</label>";
+            }
+        ?>
+    </div>
+    <button type="submit" class="btn btn-default" name="submit" value="submit">Submit</button>
+</form>
+
+<?php require_once("Views/template/footer.phtml"); ?>

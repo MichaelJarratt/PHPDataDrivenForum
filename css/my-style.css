@@ -1,0 +1,169 @@
+#title {
+    background-color: #eee;
+    color: #000;
+
+}
+#menu {
+    border-top: solid 6px #f00;
+    background-color: #f00;
+    color: #fff;
+    height: 400px;
+}
+
+#menu a {
+    background-color: #f00;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+#menu a:hover {
+    background-color: #f00;
+    color: #ddd;
+    text-decoration:underline;
+    display: block;
+}
+
+#content {
+
+}
+
+#postDisplay
+{
+    background-color: darkgray;
+    padding-top: 1px;
+    font-size: 1.3em;
+}
+
+#postDisplay h2
+{
+    border-bottom-style: solid;
+}
+
+.imageContainer
+{
+    border-bottom-style: solid;
+}
+
+#postDisplayDetailsBar
+{
+    color: white;
+    background-color: #5e5e5e;
+}
+
+#categoryDisplay
+{
+    padding-right: 4em;
+}
+
+#postDisplayDetailsBar p
+{
+    display: inline-block;
+}
+
+#commentSection
+{
+    background-color: lightgray;
+    font-size: 1.1em;
+}
+
+.comment
+{
+    background-color: white;
+    border-style: solid;
+}
+
+.commentinfo p
+{
+    display: inline;
+}
+
+.replyBox
+{
+    height: 142px;
+}
+
+.loginDiv
+{
+    display: block;
+}
+
+.loginDiv label
+{
+    width: 8em;
+}
+
+.loginDiv .checkFail
+{
+    width: auto;
+    color: red;
+}
+
+.formSuccess
+{
+    color: green;
+}
+.loginForm
+{
+    font-size: 1.3em;
+}
+
+#postContainer
+{
+    background-color: #cccccc;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+
+.postListing
+{
+    border: #222222;
+    border-style: double;
+    background-color: white;
+}
+
+#userDetails
+{
+    font-size: 1.3em;
+}
+
+#optionsMenu
+{
+    font-size: 1.3em;
+    background-color: #cccccc;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+#optionsMenu ul
+{
+    list-style: none;
+    padding-left: 20px;
+}
+
+#loginButtonForm
+{
+    background-color: #cccccc;
+    padding-left: 0;
+    border-style: none;
+}
+
+.loginButton
+{
+    border-style: none;
+    font-size: 1.3em;
+    background-color: #cccccc;
+    padding-left: 0;
+}
+
+.noRightPad
+{
+    padding-right: 0px;
+}
+
+#footer {
+    margin_top: 20px;
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+}

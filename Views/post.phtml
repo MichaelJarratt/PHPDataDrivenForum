@@ -1,0 +1,67 @@
+<?php require('template/header.phtml') ?>
+<div id="postDisplay">
+    <h2 class="h2"><?php echo $view->post["title"] ?></h2>
+    <?php
+        if($view->post['imageName']!=null) //if the post has an image
+        {
+            echo "<div class=\"imageContainer container-fluid text-center\">";
+            if(isset($_SESSION['loggedIn'])) //user can only view images if logged in
+            {
+                echo "<img src=\"images/".$view->post['imageName']."\">";
+            }
+            else
+            {
+                echo "<h3>Please login to view images</h3>";
+            }
+            echo "</div>";
+        }
+    ?>
+    <div class="container-fluid">
+        <?php echo $view->post["content"] ?>
+    </div>
+    <div class="bottom container-fluid" id="postDisplayDetailsBar">
+        <p>Posted by <a href="userPage.php?userID=<?php echo $view->post["userID"] ?>"><?php echo $view->post["userName"] ?></a> on <?php echo $view->post["datePosted"] ?></p>
+        <p class="pull-right"> <?php echo $view->post["views"] ?> views </p>
+        <p class="pull-right" id="categoryDisplay">Category: <?php echo $view->post["catName"] ?> </p>
+    </div>
+</div>
+<div>
+    <h4>click <a href="index.php">here</a> to return to index</h4>
+</div>
+
+    <h3>Comments</h3>
+    <div class="container-fluid" id="commentSection">
+    <?php
+    if(isset($_SESSION["loggedIn"]))
+    {
+        echo   "
+                <div>
+                    <P>click <a href=\"#postComment\" data-toggle=\"collapse\">here</a> to make your own comment.</P>
+                    <div id=\"postComment\" class=\"collapse\">
+                        <form class=\"replyBox form-control\" action=\"".$_SERVER['PHP_SELF']."\" method=\"post\">
+                            <div class=\"form-group\">
+                                <label>comment:</label>
+                                <textarea class=\"form-control\" name=\"commentContent\"> </textarea>
+                            </div>
+                            <div class=\"form-group\">
+                                <input type='submit' name='commentSubmit' value='submit'>
+                            </div>
+                            <input type=\"hidden\" name=\"commentType\" value=\"topLevel\">
+                            <input type=\"hidden\" name=\"parentID\" value=\"".$_GET['postID']."\">
+                        </form>
+                    </div>
+                </div>";
+    }
+    if ($view->comments == null)
+    {
+        echo "Wow look how FuCkInG eMpTy tHiS iS";
+    }
+    else
+    {
+        //var_dump($view->comments);
+        echo $view->comments;
+    }
+    ?>
+</div>
+<?php require('template/footer.phtml') ?>
+

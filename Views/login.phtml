@@ -1,0 +1,61 @@
+<?php require_once ("Views/template/header.phtml"); ?>
+
+<div class="container-fluid loginForm">
+    <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
+        <p>Enter your credentials</p>
+        <div class="loginDiv">
+            <label>Email:</label>
+            <input type="email" required="required" name="email" <?php if(isset($_POST['email'])) echo "value=\"".$_POST['email']."\""; elseif(isset($_COOKIE['email'])) echo "value=\"".$_COOKIE['email']."\""; ?>>
+        </div>
+        <div class="loginDiv">
+            <label>Password:</label>
+            <input type="password" required="required" name="password" <?php if(isset($_COOKIE['password'])) echo "value=\"".$_COOKIE['password']."\"" ?>>
+            <?php if(isset($_POST['credentialCheck']) && $_POST['credentialCheck'] == false) echo "<label class='checkFail'>Username or Password incorrect!</label>" ?>
+        </div>
+        <div class="loginDiv">
+            <label>what is <?php echo $_POST['captcha'] ?>:</label>
+            <input type="number" required="required" name="captchaAnswer">
+            <input type="hidden" name="captcha" value="<?php echo $_POST['captcha'] ?>">
+            <?php if(isset($_POST['captchaStatus']) && $_POST['captchaStatus'] == false) echo "<label class='checkFail'>Captcha Failed!</label>" ?>
+        </div>
+        <div>
+            <?php
+                //if the captcha succeeded and the login details were correct
+                if (isset($_POST['loginSubmit']) && ($_POST['captchaStatus'] == true) && ($_POST['credentialCheck'] == true))
+                {
+                    echo "<label class='formSuccess'>Login successful!</label>";
+                }
+                else
+                {
+                    echo "<input type=\"submit\" name=\"loginSubmit\" value=\"submit\" >";
+                    if(isset($_COOKIE['remember']))
+                        echo "<div><input type='checkbox' name='remember' checked> <label>Remember Me (uses cookies)</label></div>";
+                    else
+                        echo "<div><input type='checkbox' name='remember'> <label>Remember Me (uses cookies)</label></div>";
+                }
+            ?>
+            </div>
+    </form>
+    <?php //is the user logged out let them know
+    if ((isset($_POST['logOut'])))
+        echo "<p class=\"formSuccess\" >Logged out</p>";
+    ?>
+    <?php //if the user has successfully logged in
+        if (!(isset($_POST['loginSubmit']) && ($_POST['captchaStatus'] == true) && ($_POST['credentialCheck'] == true)))
+        echo "<p>Don't have an account? click <a href=\"signup.php\">here</a></p>";
+    ?>
+
+    <?php
+        if(isset($_SESSION['previousPage']))
+        {
+            echo "<p>Click <a href=\"".$_SESSION['previousPage']."\">here</a> to return to the previous page.</p>";
+            //echo "<h5 class=\"h5\">Click <a href=\"index.php\">here</a> to return to the previous page.</h5>";
+        }
+        else
+        {
+            echo "v<h5 class=\"h5\">Click <a href=\"index.php\" > here</a > to return to the index page</h5 > ";
+        }
+    ?>
+</div>
+
+<?php require_once ("Views/template/header.phtml"); ?>

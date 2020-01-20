@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/css/my-style.css" rel="stylesheet">
+
+    <title>Queue Underflow - probably the worlds best website</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+
+<body role=""document">
+
+<div class="container-fluid noRightPad">
+        <div  class="row">
+            <div id="title" class="col-xs-12">
+                <h1>Queue Underflow</h1>
+                <div class="pull-right">
+                    <h3> <!--displays username if logged in and promp otherwise, does not display on login page-->
+                        <?php
+                        //var_dump($_SESSION);
+                            if($_SERVER['PHP_SELF']=="/login.php" || $_SERVER['PHP_SELF']=="/signup.php")
+                            {
+                                //do nothing
+                            }
+                            elseif (isset($_SESSION['loggedIn']))
+                            {
+                                echo "<a href=\"userPage.php?userID=".$_SESSION['userID']."\">".$_SESSION['userName']."</a>";
+                            }
+                            else //determine URL of current page and send it to login form when clicked
+                            {
+                                $page = $_SERVER['PHP_SELF']; //gets type of page
+                                if ($page == "/index.php")
+                                {
+                                    if(isset($_GET['categorySelect'])) //if filters are applied append them
+                                    {
+                                        $previousPage = $page."?titleSearch=".$_GET['titleSearch']."&contentSearch=".$_GET['contentSearch']."&posterSearch=".$_GET['posterSearch']."&categorySelect=".$_GET['categorySelect'];
+                                    }
+                                    else
+                                    {
+                                        $previousPage = $page;
+                                    }
+                                }
+                                elseif ($page =="/Post.php")
+                                {
+                                    $previousPage = $page."?postID=".$_GET['postID'];
+                                }
+                                //echo $previousPage;
+                                $view->previousPage = $previousPage; //stores previous page in view for use elsewhere
+                                //var_dump($view); echo "view";
+                                echo "<form class=\"form-control\" action=\"login.php\" method=\"post\" id='loginButtonForm'>
+                                <input type=\"submit\" name=\"submit\" value=\"login/signup\" class='btn-link'>
+                                <input type=\"hidden\" name=\"previousPage\" value=\"$previousPage\">
+                                </form>";
+                            }
+                        ?>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+
+
+    <div id="content" class="container-fluid noRightPad">
+
+
+

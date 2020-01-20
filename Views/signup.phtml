@@ -1,0 +1,38 @@
+<?php require_once ("Views/template/header.phtml"); ?>
+
+<div class="container-fluid loginForm">
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+        <h3 class="h3">Create an account!</h3>
+        <div class="loginDiv">
+            <label>username:</label>
+            <input type="text" required="required" name="userName" <?php if(isset($_POST['userName'])) echo "value=".$_POST['userName']; ?>>
+            <?php if(isset($_POST['userNameCheck'])) if($_POST['userNameCheck'] == false) echo "<label class='checkFail'>Username already taken!</label>" ?>
+            <?php if(isset($_POST['userNameLengthCheck'])) if($_POST['userNameLengthCheck'] == false) echo "<label class='checkFail'>Username exceeds maximum length!(30 characters)</label>" ?>
+        </div>
+        <div class="loginDiv">
+            <label>Email:</label>
+            <input type="email" required="required" name="email" <?php if(isset($_POST['email'])) echo "value=".$_POST['email']; ?>>
+            <?php if(isset($_POST['emailCheck'])) if($_POST['emailCheck'] == false) echo "<label class='checkFail'>Email already taken!</label>" ?>
+        </div>
+        <div class="loginDiv">
+            <label>Password:</label>
+            <input type="password" required="required" name="password">
+        </div>
+        <div class="loginDiv">
+            <label>Confirm Password:</label>
+            <input type="password" required="required" name="passwordConfirmation">
+            <?php if(isset($_POST['passwordCheck'])) if($_POST['passwordCheck'] == false) echo "<label class='checkFail'>Passwords did not match!</label>" ?>
+        </div>
+        <div class="loginDiv">
+            <input type="submit" name="submit" value="Sign Up">
+        </div>
+    </form>
+    <?php
+        if(isset($_POST['valid']) && $_POST['valid']) //if sign up details are all valid
+            echo "<label class='success'>Signup successful! click <a href='login.php'>here</a> to log in</label>"; //displays successful signup message if applicable
+        else
+            echo "<label>click <a href='login.php'>here</a> to return to login page</label>"; //if sign up unsuccessful or not yet attempted
+    ?>
+</div>
+
+<?php require_once ("Views/template/header.phtml"); ?>
